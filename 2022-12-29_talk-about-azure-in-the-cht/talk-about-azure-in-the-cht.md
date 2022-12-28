@@ -31,18 +31,102 @@ _paginate: false
 
 ---
 
-🚫 Cloud Shell
+## 無法在 Azure Portal 使用的功能
+
+- 🚫 Cloud Shell
+- 🚫 Storage Browser (Storage Account)
+- 🚫 Kudu service (App Service)
+- 🚫 Kubernetes Resources (Kubernetes Services)
+- etc.
+
+---
+## Network Issues
+
+![](./assets/network-issues-meme.png)
+
+---
+## Azure ExpressRoute
+
+![](./assets/expressroute-connection-overview.png)
+
+[Azure ExpressRoute Overview:<br>Connect over a private connection | Microsoft Learn](https://learn.microsoft.com/en-us/azure/expressroute/expressroute-introduction)
+
+
+---
+## Azure ExpressRoute
+
+![](./assets/azure-expressroute-explain.png)
+
 
 ---
 
-🚫 Storage Account
+## 中華電信多雲交換平台 (CMCX)
+
+![](./assets/cmcx_pic02.png)
+
+[中華電信多雲交換平台 (CMCX)](https://www.hicloud.hinet.net/cmcx.html)
+
+---
+## HiLink MPLS 的成本支出
+
+- Azure Expressroute 到資分 CMXC 頻寬
+- 資分 CMCX 固定頻寬
+- 網分與資分 CMCX 間的 HiLink 頻寬
+
+---
+## Azure 日本東部地區
+
+CMCX (新北板橋區) -> Azure 日本東部機房 (東京埼玉縣)
+- 物理距離：2,000 公里的距離
+- 網路延遲：30 ~ 70 ms 的延遲
 
 ---
 
-CHTSOC系統日誌伺服器：之後Ａｚｕｒｅ會提供ＬＣ／ＬＳ
+![bg fit :60%](./assets/no-azure-in-new-taipei.png)
 
 ---
-ｅｙｅｓｅｅ監控
+## Azure 防火牆允出規則 (HTTPS)
+![](./assets/nc-fetnet.png)
+
+---
+## Azure 防火牆允出規則 (HTTPS)
+![](./assets/curl-fetnet-openssl-error.png)
+
+---
+## Azure 防火牆允出規則 (HTTPS)
+![](./assets/tcptraceroute-fetnet.png)
+
+---
+## Azure 防火牆允出規則 (HTTPS)
+
+若無相符的網路規則，而且通訊協定是 HTTP、HTTPS 或 MSSQL，則封包會依據 **應用程式規則** 的優先順序進行評估
+
+[Azure Firewall の各ルールの動作につい |<br>Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/network/firewall-rules/)
+
+
+---
+## Azure 防火牆允出規則 (HTTPS)
+
+```bash
+./scapy-tcp-traceroute.py -f rules.csv
+```
+
+![](./assets/scapy-tcp-traceroute.png)
+
+
+---
+## IP Address 168.63.129.16
+
+
+[What is IP address 168.63.129.16? |<br>Microsoft Learn](https://learn.microsoft.com/en-us/azure/virtual-network/what-is-ip-address-168-63-129-16)
+
+---
+
+## Azure 連入樣態
+
+### TODO：
+- App GW
+- Azure Front Door
 
 ---
 ## 為什麼選擇 Azure App GW v2?
@@ -51,19 +135,62 @@ CHTSOC系統日誌伺服器：之後Ａｚｕｒｅ會提供ＬＣ／ＬＳ
 - 更快的佈建和更新速度
 
 
-[What is Azure Application Gateway v2? | Microsoft Learn](https://learn.microsoft.com/en-us/azure/application-gateway/overview-v2)
+[What is Azure Application Gateway v2? |<br>Microsoft Learn](https://learn.microsoft.com/en-us/azure/application-gateway/overview-v2)
+
+
 
 ---
-Peering
+## App GW 密碼套件設定 (v2 版本)
+
+```sh
+RG=YOUR_RESOURCE_GROUP
+APP_GW=YOUR_APP_GW
+
+az network application-gateway ssl-policy set \
+    --resource-group $RG \
+    --gateway-name $APP_GW \
+    --name AppGwSslPolicy20220101S \
+    --policy-type Predefined
+```
+
+[az network application-gateway ssl-policy |<br>Microsoft Learn](https://learn.microsoft.com/en-us/cli/azure/network/application-gateway/ssl-policy?view=azure-cli-latest#az-network-application-gateway-ssl-policy-set-examples)
 
 ---
-## 確認 Azure 防火牆允出規則已開通
-
-若無相符的網路規則，而且通訊協定是 HTTP、HTTPS 或 MSSQL，則封包會依據 **應用程式規則** 的優先順序進行評估
+## App GW 密碼套件設定 (v1 版本)
 
 
+```sh
+RG=YOUR_RESOURCE_GROUP
+APP_GW=YOUR_APP_GW
 
-[Azure Firewall の各ルールの動作について | Japan Azure IaaS Core Support Blog](https://jpaztech.github.io/blog/network/firewall-rules/)
+az network application-gateway ssl-policy set \
+    --resource-group $RG \
+    --gateway-name $APP_GW \
+    --policy-type Custom \
+    --min-protocol-version TLSv1_2 \
+    --cipher-suites TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 \ 
+        TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 \
+        TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 \
+        TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
+```
+
+---
+## App GW 密碼套件設定
+
+![](./assets/ssl-labs.png)
+
+---
+## 自建 VNet
+
+### TODO:
+- 哪些情境需要？
+- VNet Peering
+- SNAT
+
+---
+## 資料庫遷移
+
+### TODO：
 
 ---
 ### Azure File Share 不同層級小檔讀寫效能
@@ -76,11 +203,26 @@ Peering
 [Azure Container Apps: working with storage - Microsoft Community Hub](https://techcommunity.microsoft.com/t5/fasttrack-for-azure/azure-container-apps-working-with-storage/ba-p/3561853)
 
 ---
+## Azure AD Application Developer
+
+> Azure AD 應用程式註冊，<br>使用 AKS create、Service Prinicipal、Azure Pipeline Create Resource，您可能會需要這個權限
+
+[Application Developer 權限申請 (office.com)](https://forms.office.com/r/aEHei3tRiD)
+
+---
 ## Q&A Session
 
 ![](./assets/qa.png)
 
+---
+## Freepik - Flaticon
 
+- [Azure icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/azure)
+- [Qa icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/qa)
+
+
+
+---
 ---
 UTC 時間
 
@@ -96,18 +238,16 @@ UTC 時間
 不好意思在此詢問，這不算是 Azure 的技術問題而是行政流程問題。若要申請 Azure 上的應用 Internet 連出，需要提出資訊管理委員會核准例外申請單 (Azure) 並獲得各家分公司的資訊管理委員會代表簽章
 
 ---
-自建 VNET
-
----
 Azure 是否可以加入到 HiLink MPLS VPN
 
 https://hicloud.hinet.net/cmcx.html
 ---
 AAD
 Push ACR/AAD
-https://forms.office.com/r/aEHei3tRiD
 
----
+
+
+https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs
 
 此一議題除了 App Service 議題外，還包含防火牆規則議題故在此提出。對於使用 Azure App Service 的團隊，如果不透過 Azure Pipelines self-hosted agent，而是想透過 Azure App Service Deployment Center 進行自動部署，則需要增加一條防火牆連出局情 https://oryx-cdn.microsoft.io
 
@@ -120,9 +260,6 @@ Detecting platforms... Error: Oops... An unexpected error has occurred. · Issue
 Cannot deploy an Azure Function when Azure Function App is enabled with VNET integration · Issue #1126 · microsoft/Oryx · GitHub
 
 ---
-Hi-Link
-
----
 ## Azure 使用建議與問題討論
 
 ![](./assets/qr-code_azure-%E4%BD%BF%E7%94%A8%E5%BB%BA%E8%AD%B0%E8%88%87%E5%95%8F%E9%A1%8C%E8%A8%8E%E8%AB%96.png)
@@ -130,9 +267,7 @@ Hi-Link
 ---
 Defender for Cloud 的 storage 
 
----
 
-![bg fit :60%](./assets/no-azure-in-new-taipei.png)
 
 ---
 [6/21 9:25 AM] 徐敏哲
@@ -186,16 +321,7 @@ https://jpaztech.github.io/blog/network/firewall-rules/
 
 根據我們後臺的查看，這個firewall應該是啓用了DNS proxy功能，并且使用了自定義的DNS服務器進行解析。您提到内部域名相關的Application Rule已經添加了，不過目前看來存在解析失敗的問題。由於微軟的客戶隱私政策，我們無法查看VWAN那邊的信息，所以還煩請您聯係一下管理VWAN的同事，以便我進行一些後續的調查。
 
----
-## Freepik - Flaticon
 
-- [Azure icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/azure)
-- [Qa icons created by Freepik - Flaticon](https://www.flaticon.com/free-icons/qa)
-
-https://docs.microsoft.com/en-us/azure/app-service/troubleshoot-diagnostic-logs
-
-
-外雲主機房在台北信義園區
 
 ---
 登入相關的問題，請洽 資訊技術分公司/企業應用系統發展處/企業基礎服務發展科，這是登入政策的管理單位
@@ -230,45 +356,14 @@ Azure Portal 只能透過跳板機存取
 
 可能就是要拋 NSG Flow Log 給 SOC
 
----
-## App GW 密碼套件設定 (v2 版本)
 
-```sh
-RG=YOUR_RESOURCE_GROUP
-APP_GW=YOUR_APP_GW
-
-az network application-gateway ssl-policy set \
-    --resource-group $RG \
-    --gateway-name $APP_GW \
-    --name AppGwSslPolicy20220101S \
-    --policy-type Predefined
-```
-
-- [az network application-gateway ssl-policy | Microsoft Learn](https://learn.microsoft.com/en-us/cli/azure/network/application-gateway/ssl-policy?view=azure-cli-latest#az-network-application-gateway-ssl-policy-set-examples)
 
 ---
-## App GW 密碼套件設定 (v1 版本)
+## PaaS 日誌收攏至 LS/LC
 
+![40%](./assets/azure-monitor-2-syslog_overview.png)
 
-```sh
-RG=YOUR_RESOURCE_GROUP
-APP_GW=YOUR_APP_GW
-
-az network application-gateway ssl-policy set \
-    --resource-group $RG \
-    --gateway-name $APP_GW \
-    --policy-type Custom \
-    --min-protocol-version TLSv1_2 \
-    --cipher-suites TLS_ECDHE_ECDSA_WITH_AES_256_GCM_SHA384 \ 
-        TLS_ECDHE_ECDSA_WITH_AES_128_GCM_SHA256 \
-        TLS_ECDHE_RSA_WITH_AES_256_GCM_SHA384 \
-        TLS_ECDHE_RSA_WITH_AES_128_GCM_SHA256
-```
-
----
-## App GW 密碼套件設定
-
-![](./assets/ssl-labs.png)
+[GitHub - miguelangelopereira/azuremonitor2syslog: Forward Azure monitor logs to syslog (via Event Hub)](https://github.com/miguelangelopereira/azuremonitor2syslog/)
 
 ---
 個人認為比較有爭議的會是 storage 與 DNS，如果 DNS 都是使用微軟或是中華內部的 DNS 服務，那麼有需要特別啟用 Microsoft Defender for DNS 嗎？
@@ -373,7 +468,13 @@ Event Hub --> Azure Function --> Syslog
 
 ---
 
-## IP Address 168.63.129.16
 
 
-- [What is IP address 168.63.129.16? | Microsoft Learn](https://learn.microsoft.com/en-us/azure/virtual-network/what-is-ip-address-168-63-129-16)
+
+---
+
+
+CHTSOC系統日誌伺服器：之後Ａｚｕｒｅ會提供ＬＣ／ＬＳ
+
+---
+ｅｙｅｓｅｅ監控
