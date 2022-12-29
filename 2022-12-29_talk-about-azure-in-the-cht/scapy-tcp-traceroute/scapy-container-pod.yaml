@@ -1,0 +1,12 @@
+apiVersion: v1
+kind: Pod
+metadata:
+  name: scapy
+spec:
+  containers:
+  - name: scapy
+    image: harbor.cht.com.tw:30725/YOUR_PROJECT/scapy-container:20220518
+    command: ["tail"]
+    args: ["-f", "/dev/null"]
+  imagePullSecrets:
+  - name: cht-vip-welfare-regcred

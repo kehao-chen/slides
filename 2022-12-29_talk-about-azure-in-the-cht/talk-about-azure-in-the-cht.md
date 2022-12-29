@@ -92,17 +92,37 @@ CMCX (新北板橋區) -> Azure 日本東部機房 (東京埼玉縣)
 > —— 資通安全管理規範與實施細則V14- 2022.08
 
 ---
-## Hub-spoke network topology
+## Hub-spoke 網路拓撲
 
 ![](./assets/azure-hub-spoke.png)
 
 [Hub-spoke network topology in Azure -<br>Azure Architecture Center | Microsoft Learn](https://learn.microsoft.com/en-us/azure/architecture/reference-architectures/hybrid-networking/hub-spoke?tabs=cli)
 
 ---
-
 ![](./assets/route-injection-split-route-server-with-firewall.png)
 
 [Default route injection in spoke VNets |<br>Microsoft Learn](https://learn.microsoft.com/en-us/azure/route-server/route-injection-in-spokes)
+
+---
+## Azure 連入的安全防護
+
+![](./assets/azure-vnet-security-design1_500.png)
+
+[Firewall, App Gateway for virtual networks - <br>Azure Example Scenarios | Microsoft Learn](https://learn.microsoft.com/en-us/azure/architecture/example-scenario/gateway/firewall-application-gateway#azure-firewall-only)
+
+---
+## Azure 連入的安全防護
+
+![](./assets/azure-vnet-security-design4_500.png)
+
+[Firewall, App Gateway for virtual networks - <br>Azure Example Scenarios | Microsoft Learn](https://learn.microsoft.com/en-us/azure/architecture/example-scenario/gateway/firewall-application-gateway#application-gateway-before-firewall)
+
+---
+## Azure 連入的安全防護
+
+![](./assets/azure_front_door_design5_500.png)
+
+[Firewall, App Gateway for virtual networks - <br>Azure Example Scenarios | Microsoft Learn](https://learn.microsoft.com/en-us/azure/architecture/example-scenario/gateway/firewall-application-gateway#application-gateway-after-firewall)
 
 
 ---
@@ -216,21 +236,21 @@ az network application-gateway ssl-policy set \
 ## 自建 VNet
 
 #### 需求情境
-網路/運算元件可以依據負載**自動擴展**，<br>但每新建一組實例便需要一組 IP Address
+網路/運算元件可以依據負載**自動擴展**，<br>但每新建一組實例便需要一組 IP Address<br>(需要預留足夠數量的 IP Address)
 
 #### 執行難點
   - VNet Peering
   - SNAT
 
 ---
-## 自建 VNet - 以 PMS 為例
 
-
+![bg 65%](./assets/Azure-00.%20PMS%20%E7%B6%B2%E8%B7%AF%E6%9E%B6%E6%A7%8B%20(Prod).drawio.png)
 
 ---
 ## 資料庫遷移
 
-### TODO：
+![](./assets/Azure-Postgres-graphic-depicting-three-deployment-options.png)
+![](./assets/Azure-MySQL-graphic-depicting-two-deployment-options-including-Flexible-Server.png)
 
 ---
 ## Azure PaaS 日誌收容
@@ -268,9 +288,14 @@ az network application-gateway ssl-policy set \
 ---
 ## Microsoft Defender for Storage
 
-[](./assets/defender-for-storage-pms-billing.png)
+![](./assets/defender-for-storage-pms-billing.png)
 
+---
+## Microsoft Defender for Storage
 
+![](./assets/defender-for-storage-high-level-overview.png)
+
+[Microsoft Defender for Storage -<br>the benefits and features | Microsoft Learn](https://learn.microsoft.com/en-us/azure/defender-for-cloud/defender-for-storage-introduction)
 
 ---
 ## Azure AD Application Developer
@@ -283,6 +308,8 @@ az network application-gateway ssl-policy set \
 ## Azure 使用建議與問題討論
 
 ![](./assets/qr-code_azure-use-suggestion.png)
+
+
 
 ---
 ## Q&A Session
